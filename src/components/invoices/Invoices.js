@@ -14,7 +14,7 @@ const Invoices = () => {
   };
 
   return (
-    <ul className="w-full mt-[44px]">
+    <ul className="w-full mt-[44px] px-4">
       {filteredInvoices.map((invoice, index) => {
         return (
           <InvoicesList

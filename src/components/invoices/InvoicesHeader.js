@@ -1,28 +1,28 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { AppContext } from '../../context/context';
 import { optionsFilter } from '../../utilities/initialValues';
-import { invoicesMessage } from '../../utilities/invoiceMessage';
+import invoicesMessage from '../../utilities/invoiceMessage';
 import ItemsOptions from '../Items/ItemsOptions';
+import { headerVariant } from '../../utilities/framerVariants';
 
 const InvoicesHeader = () => {
-  const {
-    filteredInvoices,
-    filter,
-    setFilter,
-    onHandleFormOpen,
-    width,
-    breakpoints,
-  } = useContext(AppContext);
+  const { filteredInvoices, filter, setFilter, width, breakpoints } =
+    useContext(AppContext);
 
   const [options, setOption] = useState(optionsFilter);
-  const [isOptionOpen, setIsOptinOpen] = useState(false);
+  const [isOptionOpen, setIsOptionOpen] = useState(false);
 
   const message = invoicesMessage(
     filteredInvoices && filteredInvoices.length,
     filter
   );
 
+  /**
+   * Functio to handle a filter event
+   * @param {number} id when id is equal to option.id checked
+   */
   const onHandleClick = id => {
     setOption(
       options.map(option => {
@@ -37,7 +37,13 @@ const InvoicesHeader = () => {
   };
 
   return (
-    <div className="flex items-center w-full bg-[#121212] mt-[-2px] md:mt-[30px] px-4 md:px-[20px] py-[25px] md:rounded-[12px]">
+    <motion.div
+      variants={headerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      className="flex items-center w-full bg-[#121212] mt-[-2px] md:mt-[30px] px-4 md:px-[20px] py-[25px] md:rounded-[12px]"
+    >
       <div className="mr-auto text-white  uppercase">
         <h1 className="text-[14px] md:text-[20px]">Invoices</h1>
         <p className="text-[8px] md:text-[12px]">{message}</p>
@@ -46,7 +52,7 @@ const InvoicesHeader = () => {
         <button
           className="text-white flex items-center"
           aria-label="filter by status"
-          onClick={() => setIsOptinOpen(!isOptionOpen)}
+          onClick={() => setIsOptionOpen(!isOptionOpen)}
         >
           <span className="text-[10px] md:text-[13px] mr-2">
             {width > breakpoints ? 'Filter by status' : 'Filter'}
@@ -89,10 +95,7 @@ const InvoicesHeader = () => {
           })}
         </div>
       </div>
-      <button
-        className="flex justify-center items-center w-[100px] md:w-[170px] h-[47px] bg-[#452da5] text-white rounded-[50px] ml-8"
-        onClick={onHandleFormOpen}
-      >
+      <button className="flex justify-center items-center w-[100px] md:w-[170px] h-[47px] bg-[#452da5] text-white rounded-[50px] ml-8">
         <Link to="/create" className="flex items-center justify-center">
           <span className="bg-white rounded-full p-2 mr-2 inline0-flex">
             <svg
@@ -114,7 +117,7 @@ const InvoicesHeader = () => {
           </span>
         </Link>
       </button>
-    </div>
+    </motion.div>
   );
 };
 
