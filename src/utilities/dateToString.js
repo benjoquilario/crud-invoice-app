@@ -1,11 +1,12 @@
+// Function to make a readable date
 export const dateToString = date => {
-  const displayOptions = {
+  const dateOptions = {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
   };
 
-  const newDate = new Date(date).toLocaleString('en-GB', displayOptions);
+  const newDate = new Date(date).toLocaleString('en-GB', dateOptions);
 
   return newDate;
 };
