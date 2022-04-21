@@ -1,4 +1,5 @@
-export const invoicesMessage = (num, filter) => {
+// Message when filtering invoices
+const invoicesMessage = (num, filter) => {
   if (num === 0 && !filter) {
     return 'There are no invoices.';
   } else if (num === 1 && filter) {
@@ -13,3 +14,5 @@ export const invoicesMessage = (num, filter) => {
     return `There are ${num} ${filter} invoices`;
   }
 };
+
+export default invoicesMessage;
