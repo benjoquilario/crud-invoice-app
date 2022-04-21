@@ -2,7 +2,7 @@ import { GlobalProvider } from './context/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import InvoiceView from './pages/InvoiceView';
 import Home from './pages/Home';
-import CreateInvoiceForm from './components/Form/CreateInvoiceForm';
+import CreateInvoice from './pages/CreateInvoice';
 import Header from './components/Layout/Header';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<CreateInvoiceForm />} />
+            <Route path="/create" element={<CreateInvoice />} />
             <Route path="/invoice/:id" element={<InvoiceView />} />
           </Routes>
         </div>
