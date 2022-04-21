@@ -1,6 +1,6 @@
 import { createContext, useReducer, useState, useEffect } from 'react';
 import { invoicesReducers } from '../store/reducers/invoicesReducers';
-import generatePaymentDueDate from '../store/action/invoicesAction';
+import generatePaymentDueDate from '../utilities/generatePaymentDueDate';
 import data from '../data/data.json';
 import generateUniqueId from '../utilities/generateId';
 
@@ -26,6 +26,10 @@ export const GlobalProvider = ({ children }) => {
   const [width, setWidth] = useState(window.innerWidth);
   const breakpoints = 768;
 
+  const onHandleFormOpen = () => setIsFormOpen(isFormOpen => !isFormOpen);
+  const onHandlePopUpOpen = () => setPopUpOpen(isPopUpOpen => !isPopUpOpen);
+
+  // Resizing the innerWidth of the page to change content when breakpoint is met
   useEffect(() => {
     window.addEventListener('resize', () => setWidth(window.innerWidth));
 
@@ -33,10 +37,12 @@ export const GlobalProvider = ({ children }) => {
       window.removeEventListener('resize', () => setWidth(window.innerWidth));
   });
 
+  // Store data in the local storage every time state.invoice dependency array has changed
   useEffect(() => {
     localStorage.setItem('invoices', JSON.stringify(state.invoices));
-  }, [state]);
+  }, [state.invoices]);
 
+  // Setting the invoice state when user change the filter.
   useEffect(() => {
     if (state.invoices && filter) {
       setFilteredInvoices(
@@ -49,8 +55,13 @@ export const GlobalProvider = ({ children }) => {
     }
   }, [state.invoices, filter]);
 
+  /**
+   *  Function for creating a invoice data
+   * @param {object} data invoices data when user created a invoice
+   * @param {string} status String with the state status data ('pending', 'paid', 'draft')
+   */
   const createInvoice = (data, status) => {
-    console.log(data.items);
+    console.log(data);
     dispatch({
       type: 'CREATE_INVOICE',
       payload: {
@@ -63,6 +74,10 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  /**
+   * Function for updating/editing invoice
+   * @param {object} data updating invoices data when user edit a invoice
+   */
   const updateInvoice = data => {
     dispatch({
       type: 'UPDATE_INVOICE',
@@ -70,6 +85,10 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  /**
+   * Function for deleting a invoice
+   * @param {invoice id} id with id state of generateId function
+   */
   const deleteInvoice = id => {
     dispatch({
       type: 'DELETE_INVOICE',
@@ -77,15 +96,16 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  /**
+   * Function for updating the status of invoice
+   * @param {object} data invoices data to find what we want to update status
+   */
   const markAsPaid = data => {
     dispatch({
       type: 'MARK_AS_PAID',
       payload: data,
     });
   };
-
-  const onHandleFormOpen = () => setIsFormOpen(isFormOpen => !isFormOpen);
-  const onHandlePopUpOpen = () => setPopUpOpen(isPopUpOpen => !isPopUpOpen);
 
   return (
     <AppContext.Provider
