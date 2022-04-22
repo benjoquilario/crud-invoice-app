@@ -81,7 +81,10 @@ export const GlobalProvider = ({ children }) => {
   const updateInvoice = data => {
     dispatch({
       type: 'UPDATE_INVOICE',
-      payload: data,
+      payload: {
+        ...data,
+        total: data.items.reduce((curr, acc) => (curr += acc.total), 0),
+      },
     });
   };
 
