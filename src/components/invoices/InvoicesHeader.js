@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AppContext } from '../../context/context';
@@ -10,7 +10,6 @@ import { headerVariant } from '../../utilities/framerVariants';
 const InvoicesHeader = () => {
   const { filteredInvoices, filter, setFilter, width, breakpoints } =
     useContext(AppContext);
-
   const [options, setOption] = useState(optionsFilter);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
 
@@ -26,15 +25,19 @@ const InvoicesHeader = () => {
   const onHandleClick = id => {
     setOption(
       options.map(option => {
+        
         if (id === option.id) {
           setFilter(option.checked ? null : option.value);
-
           return { ...option, checked: !option.checked };
         }
         return { ...option, checked: false };
       })
     );
   };
+
+  useEffect(() => {
+    document.title = filteredInvoices.length !== 0 ? `Invoices (${filteredInvoices.length})` : 'Invoices';
+  }, [filteredInvoices.length])
 
   return (
     <motion.div
@@ -52,6 +55,7 @@ const InvoicesHeader = () => {
         <button
           className="text-white flex items-center"
           aria-label="filter by status"
+          aria-expanded={isOptionOpen}
           onClick={() => setIsOptionOpen(!isOptionOpen)}
         >
           <span className="text-[10px] md:text-[13px] mr-2">
