@@ -11,9 +11,9 @@ const InvoicesList = ({ invoice, variants, initial, animate, exit }) => {
       initial={initial}
       animate={animate}
       exit={exit}
-      className="w-full grid grid-cols-1 items-center content-center bg-white px-[20px] h-[111px] md:h-[74px] mb-[12px] rounded-[12px] border-[1px] border-transparent border-solid hover:border-[#452da5] transition"
+      className="w-full grid grid-cols-1 items-center content-center bg-white h-[111px] md:h-[74px] mb-[12px] rounded-[12px] border-[1px] border-transparent border-solid hover:border-[#452da5] transition"
     >
-      <Link to={`invoice/${invoice.id}`} className="h-full">
+      <Link to={`invoice/${invoice.id}`} className="h-[111px] md:h-[74px] flex justify-center items-center px-[20px]">
         <div className="text-[#121212] w-full grid grid-cols-[1fr_1fr] md:grid-cols-[7rem_9rem_1fr_auto_auto_auto] items-center">
           <h2 className="mb-3 md:mb-0 font-bold text-[14px]">#{invoice.id}</h2>
           <div className="text-[#888eb0] text-[9px] md:text-[12px]">
