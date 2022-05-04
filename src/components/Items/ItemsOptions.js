@@ -1,8 +1,9 @@
 import React from 'react';
 
-const ItemsOptions = ({ id, handleClick, checked, children }) => (
-  <label className="flex items-center cursor-pointer">
+const ItemsOptions = ({ id,  handleClick, checked, children }) => (
+  <label className="flex items-center cursor-pointer" htmlFor={id}>
     <input
+      id={id}
       type="checkbox"
       className="sr-only"
       checked={checked}
